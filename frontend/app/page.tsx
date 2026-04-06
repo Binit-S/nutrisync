@@ -13,13 +13,13 @@ export default function Home() {
   const handleConsult = async () => {
     setLoading(true);
     setFoods([]);
-    const res = await fetch("https://nutrisync-backend-428451287285.asia-south1.run.app/api/consult", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ deficiency, user_email: session?.user?.email }),
-    });
-    const data = await res.json();
     try {
+      const res = await fetch("https://nutrisync-backend-428451287285.asia-south1.run.app/api/consult", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deficiency, user_email: session?.user?.email }),
+      });
+      const data = await res.json();
       setFoods(JSON.parse(data.result).foods);
     } catch {
       setFoods(["Error parsing response. Try again."]);
@@ -38,55 +38,113 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 p-10 font-sans">
-      <div className="max-w-5xl mx-auto mt-20">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white mb-6">NutriSync</h1>
-        <p className="text-xl text-slate-400 mb-12">AI-powered clinical nutrition assistant, synced to your workspace.</p>
+    <div className="min-h-screen bg-brand-cream text-brand-crimson p-10 font-body overflow-x-hidden">
+      <div className="max-w-5xl mx-auto mt-20 relative">
+        {/* Header Section */}
+        <header className="mb-20">
+          <h1 className="text-7xl font-heading font-extrabold tracking-tight mb-4 drop-shadow-sm">
+            NutriSync
+          </h1>
+          <p className="text-xl text-brand-rose max-w-lg leading-relaxed">
+            AI-powered clinical nutrition assistant, seamlessly synced to your workspace.
+          </p>
+        </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {["Identify Deficiencies", "Generate Meal Plans", "Sync to Tasks"].map((title, i) => (
-            <div key={i} className="p-6 bg-slate-900 border border-slate-800 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-indigo-500/10 hover:border-indigo-500/50 cursor-default">
-              <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-              <p className="text-slate-400 text-sm">Automated workflow based on the latest clinical data frameworks.</p>
-            </div>
-          ))}
+        {/* The "Audience Guide" - Randomized Soft Boxes */}
+        <div className="relative h-[450px] md:h-[400px] mb-24 w-full">
+          {/* Box 1: Identify */}
+          <div className="absolute top-0 left-0 bg-brand-soft-pink p-8 rounded-3xl shadow-md rotate-[-3deg] max-w-xs transition-all hover:rotate-0 hover:shadow-lg z-10">
+            <span className="text-xs font-heading font-bold uppercase tracking-widest opacity-60">Step 01</span>
+            <h3 className="font-heading text-2xl text-brand-crimson mt-1 mb-2">Identify</h3>
+            <p className="text-sm leading-relaxed opacity-90 font-medium">
+              Pinpoint nutritional gaps using clinical AI trained on the latest dietary frameworks.
+            </p>
+          </div>
+
+          {/* Box 2: Sync - Main Highlight */}
+          <div className="absolute top-24 left-1/2 -translate-x-1/2 bg-brand-crimson p-10 rounded-[2.5rem] shadow-2xl rotate-[2deg] text-brand-cream max-w-sm z-20 border-4 border-brand-peach/20">
+            <span className="text-xs font-heading font-bold uppercase tracking-widest opacity-70">Step 02</span>
+            <h3 className="font-heading text-3xl mt-1 mb-3">Sync to Tasks</h3>
+            <p className="text-lg leading-relaxed font-light">
+              Transform your personalized nutrition protocol into an actionable grocery checklist automatically.
+            </p>
+          </div>
+
+          {/* Box 3: Heal */}
+          <div className="absolute bottom-0 right-0 bg-brand-peach p-8 rounded-3xl shadow-md rotate-[-2deg] max-w-xs transition-all hover:rotate-0 hover:shadow-lg z-10">
+            <span className="text-xs font-heading font-bold uppercase tracking-widest opacity-60">Step 03</span>
+            <h3 className="font-heading text-2xl text-brand-crimson mt-1 mb-2">Heal</h3>
+            <p className="text-sm leading-relaxed opacity-90 font-medium">
+              Follow your dietitian-approved protocol to address deficiencies and optimize performance.
+            </p>
+          </div>
         </div>
 
-        {!session ? (
-          <button onClick={() => signIn("google")} className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-slate-200 transition">
-            Log In with Google to Start
-          </button>
-        ) : (
-          <button onClick={() => setIsOpen(true)} className="px-8 py-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-500 transition shadow-lg shadow-indigo-500/30">
-            Launch Dietitian Agent
-          </button>
-        )}
+        {/* Main CTA */}
+        <div className="flex flex-col items-center">
+          {!session ? (
+            <button 
+              onClick={() => signIn("google")} 
+              className="px-12 py-5 bg-brand-crimson text-brand-cream font-heading text-lg font-bold rounded-full hover:bg-brand-rose transition-all transform hover:scale-105 shadow-xl"
+            >
+              Log In with Google to Start
+            </button>
+          ) : (
+            <button 
+              onClick={() => setIsOpen(true)} 
+              className="px-12 py-5 bg-brand-crimson text-brand-cream font-heading text-lg font-bold rounded-full hover:bg-brand-rose transition-all transform hover:scale-105 shadow-xl"
+            >
+              Launch Dietitian Agent
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className={`fixed inset-y-0 right-0 w-3/4 bg-slate-900 border-l border-slate-800 shadow-2xl transform transition-transform duration-500 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"} flex flex-col p-8 z-50`}>
-        <button onClick={() => setIsOpen(false)} className="self-end text-slate-400 hover:text-white mb-8">Close ✕</button>
-        <div className="bg-slate-800 rounded-lg p-6 mb-6">
-          <p className="text-indigo-300 font-semibold mb-2">Dietitian Agent</p>
-          <p>Hi! What nutritional deficiency are you looking to address today?</p>
+      {/* Slide-out Panel (Drawer) */}
+      <div className={`fixed inset-y-0 right-0 w-full md:w-2/5 bg-brand-cream border-l border-brand-soft-pink shadow-2xl transform transition-transform duration-700 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"} flex flex-col p-10 z-50`}>
+        <button 
+          onClick={() => setIsOpen(false)} 
+          className="self-end font-heading font-bold text-brand-rose hover:text-brand-crimson mb-12 flex items-center gap-2"
+        >
+          CLOSE <span className="text-2xl">✕</span>
+        </button>
+        
+        <div className="bg-brand-soft-pink/30 rounded-3xl p-8 mb-8 border border-brand-soft-pink">
+          <p className="text-brand-crimson font-heading font-bold text-sm uppercase tracking-widest mb-2">Dietitian Agent</p>
+          <p className="text-xl font-medium">Hi! What nutritional deficiency are you looking to address today?</p>
         </div>
-        <div className="flex gap-4 mb-8">
+
+        <div className="flex flex-col gap-4 mb-10">
           <input
             type="text"
             placeholder="e.g., Iron, Vitamin D..."
-            className="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500"
+            className="bg-white/50 border-2 border-brand-soft-pink rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-peach text-lg"
             value={deficiency}
             onChange={(e) => setDeficiency(e.target.value)}
           />
-          <button onClick={handleConsult} className="bg-indigo-600 px-6 rounded-lg font-semibold hover:bg-indigo-500 transition">Analyze</button>
+          <button 
+            onClick={handleConsult} 
+            className="bg-brand-rose py-4 rounded-2xl font-heading font-bold text-white hover:bg-brand-crimson transition-all"
+          >
+            {loading ? "Consulting clinical data..." : "Analyze"}
+          </button>
         </div>
-        {loading && <p className="text-slate-400 animate-pulse">Consulting clinical data...</p>}
+
         {foods.length > 0 && (
-          <div className="bg-slate-950 border border-slate-800 rounded-lg p-6">
-            <h4 className="text-lg font-bold mb-4">Recommended Protocol:</h4>
-            <ul className="list-disc list-inside mb-6 space-y-2 text-slate-300">
-              {foods.map((f, i) => <li key={i}>{f}</li>)}
+          <div className="bg-white/40 border border-brand-soft-pink rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <h4 className="font-heading text-xl text-brand-crimson mb-6">Recommended Protocol:</h4>
+            <ul className="space-y-4 mb-8">
+              {foods.map((f, i) => (
+                <li key={i} className="flex items-center gap-3 text-brand-crimson/80">
+                  <span className="w-2 h-2 bg-brand-peach rounded-full" />
+                  {f}
+                </li>
+              ))}
             </ul>
-            <button onClick={createTasks} className="w-full bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-500 transition">
+            <button 
+              onClick={createTasks} 
+              className="w-full bg-emerald-600 text-white py-4 rounded-2xl font-heading font-bold hover:bg-emerald-700 transition-all shadow-lg"
+            >
               {taskStatus || "Create Google Tasks Checklist"}
             </button>
           </div>
