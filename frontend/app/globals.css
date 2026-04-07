@@ -7,8 +7,8 @@
 
 @theme {
   /* Font Families */
-  --font-heading: var(--font-poppins), sans-serif;
-  --font-body: var(--font-merriweather), serif;
+  /* --font-heading: var(--font-poppins), sans-serif;
+  --font-body: var(--font-merriweather), serif; */
 
   /* Color Palette from Image */
   --color-brand-cream: #F7E6CD;
@@ -23,6 +23,9 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+body {
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
 body {

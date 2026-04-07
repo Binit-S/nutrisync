@@ -29,12 +29,24 @@ export default function Home() {
 
   const createTasks = async () => {
     setTaskStatus("Syncing...");
-    await fetch("/api/tasks", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ foods }),
+    try{
+      const res = await fetch("/api/tasks",{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ foods }),
     });
+    const data = await res.json();
+
+    if(!res.ok || data.error){
+      console.error("Task creation failed:",data);
+      setTaskStatus("Error: " + (data.error || "Failed to sync"));
+        return;
+    }
     setTaskStatus("Added to Google Tasks! ✓");
+    }catch (error) {
+      console.error(error);
+      setTaskStatus("Error linking to tasks!");
+    }
   };
 
   return (
@@ -101,55 +113,74 @@ export default function Home() {
       </div>
 
       {/* Slide-out Panel (Drawer) */}
-      <div className={`fixed inset-y-0 right-0 w-full md:w-2/5 bg-brand-cream border-l border-brand-soft-pink shadow-2xl transform transition-transform duration-700 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"} flex flex-col p-10 z-50`}>
+<div className={`fixed inset-y-0 right-0 w-full md:w-2/5 bg-brand-cream border-l border-brand-soft-pink shadow-2xl transform transition-transform duration-700 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"} flex flex-col z-50`}>
+
+  {/* Header (NON-SCROLLABLE) */}
+  <div className="p-10 pb-4 shrink-0">
+    <button 
+      onClick={() => setIsOpen(false)} 
+      className="self-end font-bold text-brand-rose hover:text-brand-crimson mb-8 flex items-center gap-2"
+    >
+      CLOSE <span className="text-2xl">✕</span>
+    </button>
+
+    <div className="bg-brand-soft-pink/30 rounded-3xl p-6 border border-brand-soft-pink">
+      <p className="text-brand-crimson font-bold text-sm uppercase tracking-widest mb-2">
+        Dietitian Agent
+      </p>
+      <p className="text-lg font-medium">
+        Hi! What nutritional deficiency are you looking to address today?
+      </p>
+    </div>
+  </div>
+
+  {/* SCROLLABLE CONTENT */}
+  <div className="flex-1 overflow-y-auto px-10 pb-10">
+
+    <div className="flex flex-col gap-4 mb-10">
+      <input
+        type="text"
+        placeholder="e.g., Iron, Vitamin D..."
+        className="bg-white/50 border-2 border-brand-soft-pink rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-peach text-lg"
+        value={deficiency}
+        onChange={(e) => setDeficiency(e.target.value)}
+      />
+
+      <button 
+        onClick={handleConsult} 
+        className="bg-brand-rose py-4 rounded-2xl font-bold text-white hover:bg-brand-crimson transition-all"
+      >
+        {loading ? "Consulting..." : "Analyze"}
+      </button>
+    </div>
+
+    {foods.length > 0 && (
+      <div className="bg-white/40 border border-brand-soft-pink rounded-3xl p-8">
+        <h4 className="text-xl text-brand-crimson mb-6 font-bold">
+          Recommended Protocol:
+        </h4>
+
+        <ul className="space-y-4 mb-8">
+          {foods.map((f, i) => (
+            <li key={i} className="flex items-center gap-3 text-brand-crimson/80">
+              <span className="w-2 h-2 bg-brand-peach rounded-full" />
+              {f}
+            </li>
+          ))}
+        </ul>
+
         <button 
-          onClick={() => setIsOpen(false)} 
-          className="self-end font-heading font-bold text-brand-rose hover:text-brand-crimson mb-12 flex items-center gap-2"
+          onClick={createTasks} 
+          className="w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all"
         >
-          CLOSE <span className="text-2xl">✕</span>
+          {taskStatus || "Create Google Tasks Checklist"}
         </button>
-        
-        <div className="bg-brand-soft-pink/30 rounded-3xl p-8 mb-8 border border-brand-soft-pink">
-          <p className="text-brand-crimson font-heading font-bold text-sm uppercase tracking-widest mb-2">Dietitian Agent</p>
-          <p className="text-xl font-medium">Hi! What nutritional deficiency are you looking to address today?</p>
-        </div>
-
-        <div className="flex flex-col gap-4 mb-10">
-          <input
-            type="text"
-            placeholder="e.g., Iron, Vitamin D..."
-            className="bg-white/50 border-2 border-brand-soft-pink rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-peach text-lg"
-            value={deficiency}
-            onChange={(e) => setDeficiency(e.target.value)}
-          />
-          <button 
-            onClick={handleConsult} 
-            className="bg-brand-rose py-4 rounded-2xl font-heading font-bold text-white hover:bg-brand-crimson transition-all"
-          >
-            {loading ? "Consulting clinical data..." : "Analyze"}
-          </button>
-        </div>
-
-        {foods.length > 0 && (
-          <div className="bg-white/40 border border-brand-soft-pink rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h4 className="font-heading text-xl text-brand-crimson mb-6">Recommended Protocol:</h4>
-            <ul className="space-y-4 mb-8">
-              {foods.map((f, i) => (
-                <li key={i} className="flex items-center gap-3 text-brand-crimson/80">
-                  <span className="w-2 h-2 bg-brand-peach rounded-full" />
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <button 
-              onClick={createTasks} 
-              className="w-full bg-emerald-600 text-white py-4 rounded-2xl font-heading font-bold hover:bg-emerald-700 transition-all shadow-lg"
-            >
-              {taskStatus || "Create Google Tasks Checklist"}
-            </button>
-          </div>
-        )}
       </div>
+    )}
+  </div>
+</div> 
+
     </div>
   );
 }
+
