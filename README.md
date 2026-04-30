@@ -1,8 +1,8 @@
-# 🥬 NutriSync v2
+#  NutriSync v2
 
 NutriSync is an AI-powered clinical nutritionist built for the hackathon. It analyzes your dietary symptoms or known deficiencies, provides highly personalized nutrition protocols, generates 7-day meal plans, and syncs your smart grocery lists directly to Google Tasks.
 
-## 🚀 Key Features
+##  Key Features
 
 - **AI Consultation**: Powered by Gemini 2.5 Flash, it infers deficiencies from symptoms and provides structured protocols (severity, foods, dos/don'ts).
 - **Weekly Meal Planner**: Generates full 7-day meal plans based on your AI consultation and dietary constraints.
@@ -11,7 +11,7 @@ NutriSync is an AI-powered clinical nutritionist built for the hackathon. It ana
 - **Symptom Tracker**: Log daily symptoms, track severity on a 7-day trend chart, and get AI insights on your progress.
 - **Nutrient Scorecard**: Tracks your core nutrient levels and estimates your overall health score.
 
-## 🏗️ Architecture & Tech Stack
+##  Architecture & Tech Stack
 
 This project is a modern, serverless Next.js monolith replacing the legacy Python/Node split architecture.
 
@@ -22,7 +22,7 @@ This project is a modern, serverless Next.js monolith replacing the legacy Pytho
 - **Database**: Cloud Firestore (NoSQL) for user profiles, logs, and meal plans.
 - **Deployment**: Dockerized for Google Cloud Run (`output: standalone`).
 
-## 🛠️ Local Development Setup
+##  Local Development Setup
 
 1. **Install Dependencies**:
    ```bash
@@ -41,7 +41,7 @@ This project is a modern, serverless Next.js monolith replacing the legacy Pytho
    ```
    Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## 🐳 Docker Deployment
+##  Docker Deployment
 
 This project uses a multi-stage Dockerfile optimized for Cloud Run.
 
@@ -53,13 +53,6 @@ docker build -t nutrisync .
 docker run -p 8080:8080 --env-file .env.local nutrisync
 ```
 
-## 🎨 Design System
-
-NutriSync features a custom dark mode design system implemented via native CSS custom properties (`globals.css`):
-- **Base Background**: Near black (`#0a0a0a`)
-- **Accent**: Sage Green (`#8fbc8f`)
-- **Secondary**: Muted Lavender (`#c4b5e0`) and Warm Coral (`#e8a87c`)
-- **Vibe**: Modern, sleek, and fully responsive with glassmorphism and smooth animations.
 
 ---
 *Built for the 2026 Hackathon.*
