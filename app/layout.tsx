@@ -1,12 +1,9 @@
-/* ============================================================
- * NutriSync v2 — Root Layout
- * ============================================================
+/* NutriSync v2 — Root Layout
  * The root layout wraps the entire app with:
  *   - Google Fonts (Inter)
  *   - Global CSS design system
  *   - Auth context provider
- *   - HTML metadata for SEO
- * ============================================================ */
+ *   - HTML metadata for SEO*/
 
 import type { Metadata } from "next";
 import { AuthProvider } from "@/context/AuthContext";

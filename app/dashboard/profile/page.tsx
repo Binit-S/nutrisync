@@ -1,11 +1,10 @@
-/* ============================================================
+/* 
  * NutriSync v2 — Profile Page
- * ============================================================
  * User health profile management:
  *   - Edit height, weight, age, sex, goals, dietary restrictions
  *   - BMI calculation and display
  *   - Save to Firestore
- * ============================================================ */
+*/
 
 "use client";
 
@@ -153,104 +152,104 @@ export default function ProfilePage() {
 
         {/* Health Profile Form */}
         <div className="card">
-        <h3 className="text-lg font-semibold mb-4">Health Details</h3>
+          <h3 className="text-lg font-semibold mb-4">Health Details</h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
+                Height (cm)
+              </label>
+              <input
+                id="height-input"
+                type="number"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+                placeholder="e.g., 175"
+                className="input-field"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
+                Weight (kg)
+              </label>
+              <input
+                id="weight-input"
+                type="number"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                placeholder="e.g., 70"
+                className="input-field"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
+                Age
+              </label>
+              <input
+                id="age-input"
+                type="number"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                placeholder="e.g., 25"
+                className="input-field"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
+                Sex
+              </label>
+              <select
+                id="sex-input"
+                value={sex}
+                onChange={(e) => setSex(e.target.value as HealthProfile["sex"])}
+                className="input-field"
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-4">
             <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Height (cm)
+              Health Goals
             </label>
             <input
-              id="height-input"
-              type="number"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-              placeholder="e.g., 175"
+              id="goals-input"
+              type="text"
+              value={goals}
+              onChange={(e) => setGoals(e.target.value)}
+              placeholder="e.g., Lose weight, Improve energy, Build muscle"
               className="input-field"
             />
           </div>
 
-          <div>
+          <div className="mt-4">
             <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Weight (kg)
+              Dietary Restrictions (comma-separated)
             </label>
             <input
-              id="weight-input"
-              type="number"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              placeholder="e.g., 70"
+              id="restrictions-input"
+              type="text"
+              value={restrictions}
+              onChange={(e) => setRestrictions(e.target.value)}
+              placeholder="e.g., Vegan, Gluten-free, Lactose intolerant"
               className="input-field"
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Age
-            </label>
-            <input
-              id="age-input"
-              type="number"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              placeholder="e.g., 25"
-              className="input-field"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-              Sex
-            </label>
-            <select
-              id="sex-input"
-              value={sex}
-              onChange={(e) => setSex(e.target.value as HealthProfile["sex"])}
-              className="input-field"
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-            Health Goals
-          </label>
-          <input
-            id="goals-input"
-            type="text"
-            value={goals}
-            onChange={(e) => setGoals(e.target.value)}
-            placeholder="e.g., Lose weight, Improve energy, Build muscle"
-            className="input-field"
-          />
-        </div>
-
-        <div className="mt-4">
-          <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-secondary)" }}>
-            Dietary Restrictions (comma-separated)
-          </label>
-          <input
-            id="restrictions-input"
-            type="text"
-            value={restrictions}
-            onChange={(e) => setRestrictions(e.target.value)}
-            placeholder="e.g., Vegan, Gluten-free, Lactose intolerant"
-            className="input-field"
-          />
-        </div>
-
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="btn-primary w-full mt-6"
-          id="save-profile-btn"
-        >
-          {saving ? "Saving..." : saved ? "✅ Saved!" : "Save Profile"}
-        </button>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="btn-primary w-full mt-6"
+            id="save-profile-btn"
+          >
+            {saving ? "Saving..." : saved ? "✅ Saved!" : "Save Profile"}
+          </button>
         </div>
       </div>
     </div>

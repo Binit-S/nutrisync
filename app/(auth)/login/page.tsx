@@ -1,9 +1,6 @@
-/* ============================================================
- * NutriSync v2 — Login Page
- * ============================================================
+/* NutriSync v2 — Login Page
  * Authentication page with Google sign-in and email/password.
- * Redirects to /dashboard on successful login.
- * ============================================================ */
+ * Redirects to /dashboard on successful login.*/
 
 "use client";
 

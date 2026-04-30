@@ -1,11 +1,8 @@
-/* 
- * NutriSync v2 — Meal Plan API Route
- * ============================================================
+/* NutriSync v2 — Meal Plan API Route
  * POST /api/meal-plan
- *
  * Generates a 7-day meal plan based on consultation results.
  * Stores the plan in Firestore under the user's collection.
- */
+*/
 
 import { NextResponse } from "next/server";
 import { generateAIJsonResponse } from "@/lib/gemini";

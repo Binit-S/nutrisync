@@ -1,11 +1,8 @@
-/* ============================================================
- * NutriSync v2 — Explain API Route
- * ============================================================
+/* NutriSync v2 — Explain API Route
  * POST /api/explain
- *
  * Takes a deficiency and list of foods, returns a plain-text
  * explanation of why each food helps address the deficiency.
- * ============================================================ */
+*/
 
 import { NextResponse } from "next/server";
 import { generateAIResponse } from "@/lib/gemini";

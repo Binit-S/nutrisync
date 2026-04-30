@@ -1,32 +1,46 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
 const features = [
   {
     title: "Dietitian Agent",
     text: "Analyze a known deficiency or symptoms and get a focused nutrition protocol.",
+    image: "/dietitian_agent.webp",
   },
   {
     title: "Analyzed Grocery Log",
     text: "Save AI-recommended foods into an in-app checklist instead of sending them elsewhere.",
+    image: "/Grocerylog.webp",
   },
   {
     title: "Meal Schedule",
     text: "Generate a seven-day meal plan from the exact analysis that created your checklist.",
+    image: "/Meal Schedule.webp",
   },
 ];
 
 const faqs = [
-  "Can I use symptom-based analysis?",
-  "Can I keep vegan or allergy constraints?",
-  "Can I track grocery completion?",
+  {
+    question: "Can I use symptom-based analysis?",
+    answer: "Yes! NutriSync's dietitian agent analyzes your symptoms and creates a focused nutrition protocol tailored to your specific needs.",
+  },
+  {
+    question: "Can I keep vegan or allergy constraints?",
+    answer: "Absolutely. You can set dietary preferences and allergies during your analysis, and all recommendations will respect your constraints.",
+  },
+  {
+    question: "Can I track grocery completion?",
+    answer: "Yes, you can check off items as you shop. The grocery checklist updates in real-time to help you stay organized.",
+  },
 ];
 
 export default function LandingPage() {
   const { user, loading } = useAuth();
   const firstName = user?.displayName?.split(" ")[0] || "User";
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
     <main className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)]">
@@ -111,7 +125,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {features.map((feature) => (
             <article key={feature.title} className="card min-h-[210px]">
-              <div className="h-14 w-14 rounded-2xl bg-[var(--accent-soft)] mb-6" />
+              <img src={feature.image} alt={feature.title} className="h-40 w-full rounded-2xl mb-6 object-contain" />
               <h2 className="text-2xl mb-3">{feature.title}</h2>
               <p>{feature.text}</p>
             </article>
@@ -171,9 +185,24 @@ export default function LandingPage() {
           <div className="card">
             <h2 className="text-3xl mb-5">FAQ</h2>
             <div className="space-y-3">
-              {faqs.map((faq) => (
-                <div key={faq} className="rounded-2xl bg-[var(--bg-panel)] p-4 font-bold">
-                  {faq}
+              {faqs.map((faq, index) => (
+                <div key={index} className="rounded-2xl bg-[var(--bg-panel)] overflow-hidden">
+                  <button
+                    onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                    className="w-full p-4 font-bold text-left flex items-center justify-between hover:bg-[var(--bg-panel)]/80 transition-colors focus:outline-none focus:ring-0"
+                  >
+                    <span>{faq.question}</span>
+                    <span className="ml-2 text-xl transition-transform" style={{
+                      transform: openFAQ === index ? "rotate(180deg)" : "rotate(0deg)",
+                    }}>
+                      ▼
+                    </span>
+                  </button>
+                  {openFAQ === index && (
+                    <div className="p-4 pt-0 text-[var(--text-secondary)]">
+                      <p className="text-sm leading-relaxed">{faq.answer}</p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

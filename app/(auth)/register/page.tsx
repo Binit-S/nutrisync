@@ -1,9 +1,7 @@
-/* ============================================================
+/*
  * NutriSync v2 — Register Page
- * ============================================================
  * New user registration with email/password + display name.
- * Also offers Google sign-in as a faster alternative.
- * ============================================================ */
+ * Also offers Google sign-in as a faster alternative.*/
 
 "use client";
 

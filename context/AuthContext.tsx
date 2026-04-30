@@ -1,6 +1,5 @@
-/* ============================================================
+/* 
  * NutriSync v2 — Authentication Context Provider
- * ============================================================
  * Wraps the entire app to provide auth state to all components.
  *
  * Features:
@@ -11,7 +10,7 @@
  * Usage:
  *   import { useAuth } from "@/context/AuthContext";
  *   const { user, signInWithGoogle, signOut } = useAuth();
- * ============================================================ */
+ */
 
 "use client";
 
@@ -56,10 +55,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
-  signInWithGoogle: async () => {},
-  signInWithEmail: async () => {},
-  signUp: async () => {},
-  logout: async () => {},
+  signInWithGoogle: async () => { },
+  signInWithEmail: async () => { },
+  signUp: async () => { },
+  logout: async () => { },
 });
 
 // ─── Provider ────────────────────────────────────────────────
