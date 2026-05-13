@@ -1,58 +1,65 @@
-#  NutriSync v2
+Markdown
+# NutriSync v2
 
-NutriSync is an AI-powered clinical nutritionist built for the hackathon. It analyzes your dietary symptoms or known deficiencies, provides highly personalized nutrition protocols, generates 7-day meal plans, and syncs your smart grocery lists directly to Google Tasks.
+NutriSync is an AI-powered clinical nutritionist built to analyze dietary symptoms or known deficiencies, provide personalized nutrition protocols, generate 7-day meal plans, and synchronize smart grocery lists directly to Google Tasks. 
 
-##  Key Features
+Author: Binit
 
-- **AI Consultation**: Powered by Gemini 2.5 Flash, it infers deficiencies from symptoms and provides structured protocols (severity, foods, dos/don'ts).
-- **Weekly Meal Planner**: Generates full 7-day meal plans based on your AI consultation and dietary constraints.
-- **Smart Grocery List**: Automatically groups items by supermarket aisle. Items appearing multiple times are flagged for bulk buying.
-- **Google Tasks Sync**: One-click sync to your Google Tasks. Access your shopping list natively on your phone while at the store.
-- **Symptom Tracker**: Log daily symptoms, track severity on a 7-day trend chart, and get AI insights on your progress.
-- **Nutrient Scorecard**: Tracks your core nutrient levels and estimates your overall health score.
+## Key Features
 
-##  Architecture & Tech Stack
+* AI Consultation: Inters deficiencies from symptoms and provides structured protocols (severity, foods, dos/donts) using Gemini 2.5 Flash.
+* Weekly Meal Planner: Generates comprehensive 7-day meal plans based on AI consultations and dietary constraints.
+* Smart Grocery List: Groups items by supermarket aisle automatically. Flags recurring items for bulk purchasing.
+* Google Tasks Synchronization: One-click synchronization to Google Tasks for native mobile access while shopping.
+* Symptom Tracker: Logs daily symptoms, tracks severity on a 7-day trend chart, and generates AI-driven progress insights.
+* Nutrient Scorecard: Tracks core nutrient levels and estimates overall health scores.
 
-This project is a modern, serverless Next.js monolith replacing the legacy Python/Node split architecture.
+## Architecture & Tech Stack
 
-- **Frontend**: Next.js 16 (App Router), React, Tailwind CSS v4.
-- **Backend (API Routes)**: Next.js API Routes (`/api/consult`, `/api/meal-plan`, `/api/tasks`, etc.)
-- **AI Integration**: `@google/genai` Node.js SDK (Gemini 2.5 Flash).
-- **Authentication**: Firebase Auth (Google OAuth + Email/Password).
-- **Database**: Cloud Firestore (NoSQL) for user profiles, logs, and meal plans.
-- **Deployment**: Dockerized for Google Cloud Run (`output: standalone`).
+This application is built as a serverless Next.js monolith.
 
-##  Local Development Setup
+* Frontend: Next.js 16.2 (App Router), React 19.1, Tailwind CSS 3.4
+* Backend: Next.js API Routes 
+* AI Integration: @google/genai Node.js SDK (Gemini 2.5 Flash), Vercel AI SDK
+* Authentication: Firebase Auth 11.6 (Google OAuth, Email/Password), NextAuth 4.24
+* Database: Cloud Firestore (NoSQL)
+* Deployment: Dockerized for Google Cloud Run (output: standalone)
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+## Local Development Setup
 
-2. **Environment Variables**:
-   Copy `.env.local.example` to `.env.local` and fill in the required keys:
-   - Firebase config & Service Account JSON
-   - Gemini API Key (from Google AI Studio)
-   - Google OAuth credentials (for Tasks API)
-
-3. **Run Development Server**:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) with your browser.
-
-##  Docker Deployment
-
-This project uses a multi-stage Dockerfile optimized for Cloud Run.
-
+1. Install Dependencies
 ```bash
-# Build the image
+npm install
+Environment Configuration
+Copy the example environment file and populate the required keys:
+
+Bash
+cp .env.local.example .env.local
+Required variables:
+
+Firebase configuration & Service Account JSON
+
+Gemini API Key
+
+Google OAuth credentials (for Tasks API)
+
+Run Development Server
+
+Bash
+npm run dev
+Navigate to http://localhost:3000 in your browser.
+
+Docker Deployment
+The project utilizes a multi-stage Dockerfile optimized for Google Cloud Run deployments.
+
+Build the container image:
+
+Bash
 docker build -t nutrisync .
+Execute the container locally:
 
-# Run the container locally (requires .env.local)
+Bash
 docker run -p 8080:8080 --env-file .env.local nutrisync
-```
-
 
 ---
 *Built for the 2026 Hackathon.*
